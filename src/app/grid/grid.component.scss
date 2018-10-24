@@ -1,0 +1,10 @@
+#grid-build{
+    margin-top: 1em;
+    min-height: 97%;
+    display: grid;
+    section{
+        div{
+            border: 1px dotted black;
+        }
+    }
+}

@@ -1,0 +1,19 @@
+
+section.hero-body{
+    flex-direction: column;
+    div{
+        flex-grow: 1;
+    }
+}
+.form-header{
+    
+    span{
+        padding-top:0;
+    }
+  
+}
+.form-container{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 250px;
+}

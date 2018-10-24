@@ -1,0 +1,7 @@
+<div id="grid-build" >
+  <section class="columns" *ngFor="let row of rows; let rowIndex = index">
+    <div class="column" contenteditable="true" *ngFor="let col of cols;let colIndex = index" (click)="selectArea(rowIndex + 1, colIndex + 1)" > Area name...</div>
+    
+  </section>
+  
+</div>

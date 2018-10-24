@@ -1,20 +1,78 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<div class="columns">
+  <aside class="column is-2 aside is-fullheight hero">
+    <div class=" has-text-centered hero-head">
+      <button class="button is-success  is-bold is-large">
+        <span class="">Get Code!!!</span>
+      </button>
+      <button class="button is-danger  is-bold is-large">
+        <span class=""><i class="fa fa-trash"></i></span>
+      </button>
+    </div>
+    <section class="hero-body">
+      <div >
+        <div class="form-header columns">
+          <span class="title is-4 has-text-centered column is-10">Edit Columns</span>
+          <button class="button is-primary is-bold" (click)="addColumn()">
+            <i class="fa fa-plus-square"></i>
+          </button>
+        </div>
+        <div class="form-container">
+          <div class="field is-horizontal has-text-centered" *ngFor="let col of cols">
+            <input type="number" class="input is-primary">
+            <button class="button is-danger delete-btn" (click)="removeColumn()">
+              <span><i class="fa fa-minus-square"></i></span>
+            </button>
+          </div>
 
+          
+         
+          
+
+        </div>
+
+
+
+      </div>
+      <div >
+        <div class="form-header columns">
+          <span class="title is-4 has-text-centered column is-10">Edit Rows</span>
+          <button class="button is-primary is-bold" (click)="addRow()">
+            <i class="fa fa-plus-square"></i>
+          </button>
+        </div>
+        <div class="form-container">
+          <div class="field is-horizontal has-text-centered" *ngFor="let row of rows">
+            <input type="number" class="input is-primary">
+            <button class="button is-danger delete-btn" (click)="removeRow()">
+              <span><i class="fa fa-minus-square"></i></span>
+            </button>
+          </div>
+
+         
+          
+          
+
+        </div>
+      </div>
+    </section>
+    <div class=" has-text-centered hero-foot">
+      <h4 class="title is-4">Grid Gap</h4>
+
+      <div class="field is-horizontal has-text-left columns">
+        <label for="colGap" class="label column  has-text-centered">Column</label>
+        <input type="number" id="colGap" class="input is-primary column">
+      </div>
+      <div class="has-text-left field is-horizontal columns">
+        <label for="rowGap" class="label is-6 column has-text-centered">Row</label>
+        <input type="number" id="rowGap" class="input is-primary column">
+      </div>
+    </div>
+
+  </aside>
+  
+<app-grid class="column is-10 " [rows]="rows" [cols]="cols"></app-grid>
+
+  
+
+</div>
