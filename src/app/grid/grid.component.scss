@@ -3,8 +3,13 @@
     min-height: 97%;
     display: grid;
     section{
-        div{
+        div.grid-element{
             border: 1px dotted black;
+            font-size: xx-large;
+            .selected-grid{
+                background-color: royalblue;
+                color:white;
+            }
         }
     }
 }

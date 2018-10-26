@@ -8,23 +8,28 @@ import { GridComponent } from './grid/grid.component';
 })
 export class AppComponent {
   title = 'grid-it';
-  rows = ["",""];
-  cols = ["","",""];
+  rows = ["", ""];
+  cols = ["", "", ""];
   @ViewChild(GridComponent) gridComponent: GridComponent;
-  addRow(){
-      // this.gridComponent.rows.push("");
-      this.rows.push("");
+  addRow() {
+    this.gridComponent.addNewRow();
+    this.rows.push("");
+
+
   }
-  addColumn(){
-    // this.gridComponent.cols.push("");
+  addColumn() {
+    this.gridComponent.addNewColumn();
     this.cols.push("");
   }
-  removeRow(){
-    // this.gridComponent.rows.push("");
+  removeRow() {
+    this.gridComponent.removeRow();
     this.rows.pop();
-}
-removeColumn(){
-  // this.gridComponent.cols.push("");
-  this.cols.pop();
-}
+  }
+  removeColumn() {
+    this.gridComponent.removeColumn();
+    this.cols.pop();
+  }
+  reset(){
+    
+  }
 }

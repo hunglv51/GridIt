@@ -5,7 +5,7 @@
       <button class="button is-success  is-bold is-large">
         <span class="">Get Code!!!</span>
       </button>
-      <button class="button is-danger  is-bold is-large">
+      <button class="button is-danger  is-bold is-large" (click)="reset()">
         <span class=""><i class="fa fa-trash"></i></span>
       </button>
     </div>
@@ -71,7 +71,7 @@
 
   </aside>
   
-<app-grid class="column is-10 " [rows]="rows" [cols]="cols"></app-grid>
+<app-grid class="column is-10 " [rows]="rows.length" [cols]="cols.length"></app-grid>
 
   
 

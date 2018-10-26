@@ -1,6 +1,15 @@
 <div id="grid-build" >
-  <section class="columns" *ngFor="let row of rows; let rowIndex = index">
-    <div class="column" contenteditable="true" *ngFor="let col of cols;let colIndex = index" (click)="selectArea(rowIndex + 1, colIndex + 1)" > Area name...</div>
+  <section class="columns" *ngFor="let row of grids; let rowIndex = index">
+    <div  *ngFor="let col of row;let colIndex = index" (click)="selectArea(rowIndex + 1, colIndex + 1, $event)" class="column grid-element">
+      <div class="form-container is-hidden">
+        <input type="text" class="input is-large" (keyup)="setTitle($event, title)" #title>
+        <div class="btn-container">
+          <button class="button is-success" (click)="saveGrid(title)"><i class="fa fa-save"></i></button>
+          <button class="button is-danger"><i class="fa fa-times"></i></button>
+        </div>
+      </div>
+      
+    </div>
     
   </section>
   
