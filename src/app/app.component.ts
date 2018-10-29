@@ -12,24 +12,32 @@ export class AppComponent {
   cols = ["", "", ""];
   @ViewChild(GridComponent) gridComponent: GridComponent;
   addRow() {
-    this.gridComponent.addNewRow();
     this.rows.push("");
+    this.gridComponent.addNewRow();
 
 
   }
   addColumn() {
-    this.gridComponent.addNewColumn();
     this.cols.push("");
+    this.gridComponent.addNewColumn();
+
   }
   removeRow() {
-    this.gridComponent.removeRow();
     this.rows.pop();
+    this.gridComponent.removeRow();
+
   }
   removeColumn() {
-    this.gridComponent.removeColumn();
     this.cols.pop();
+    this.gridComponent.removeColumn();
+
   }
   reset(){
+    this.rows = ["", ""];
+    this.cols = ["", "", ""];
+    this.gridComponent.grids = [1,2,3,4,5,6];
     
   }
+
+
 }

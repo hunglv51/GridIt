@@ -2,14 +2,12 @@
     margin-top: 1em;
     min-height: 97%;
     display: grid;
-    section{
-        div.grid-element{
-            border: 1px dotted black;
-            font-size: xx-large;
-            .selected-grid{
-                background-color: royalblue;
-                color:white;
-            }
-        }
+    position: relative;
+    .cell-holder{
+        border: 1px dotted black;
+        font-size: xx-large;
+        
     }
+  
+    
 }
