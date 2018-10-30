@@ -15,6 +15,15 @@ section.selecting{
             left:0;
             right:0;
         }
+        p.validation{
+            font-size: small;
+            color: red;
+            position: absolute;
+            top: calc(50% + 2em);
+            bottom: 0;
+            left:0;
+            right:0;
+        }
         .btn-container{
             text-align: right;
         }

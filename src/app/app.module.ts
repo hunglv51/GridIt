@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FormsModule }   from '@angular/forms';
 import { AppComponent } from './app.component';
 import { GridComponent } from './grid/grid.component';
 import { CommonModule } from '@angular/common';
@@ -16,7 +16,8 @@ import { CellDirective } from './grid/cell.directive';
   ],
   imports: [
     BrowserModule,
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   entryComponents: [SelectedCellComponent],
   providers: [],

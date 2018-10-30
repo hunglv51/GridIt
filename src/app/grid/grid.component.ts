@@ -149,6 +149,7 @@ export class GridComponent implements AfterViewChecked {
     this.namedCells = [];
     this.selectingCell.destroy();
     this.selectingCell = undefined;
+    this.gridTemplate = [];
   }
 
   getCodeData(){
@@ -156,9 +157,11 @@ export class GridComponent implements AfterViewChecked {
       {
         this.namedCells.push(this.selectingCell);
         this.selectingCell = undefined;
+        this.startCell = 0;
       }
+    this.gridTemplate = [];
     for(let i = 0;i < this.rows;i++){
-      this.gridTemplate.push([]);
+      this.gridTemplate.push('.'.repeat(this.cols).split(""));
     }
     
     this.namedCells.forEach(x => {
@@ -202,7 +205,9 @@ export class GridComponent implements AfterViewChecked {
     
   }
   getGridCSS(){
-   
+    
+    console.log(this.gridTemplate);
+    
     return `
     html,
     body {

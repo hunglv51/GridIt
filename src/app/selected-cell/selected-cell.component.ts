@@ -10,11 +10,12 @@ import { cellStatus } from 'src/models/cell-status';
 })
 export class SelectedCellComponent implements OnInit {
   gridArea: string;
-  title: string;
+  title: string = "";
   status:number;
   css:object = {'border-color': this.getRandomColor(), 'grid-area': ""};
   @ViewChild("btnSave") btnSave: ElementRef;
   @ViewChild('txtTitle') inputTitle: ElementRef;
+  @ViewChild('validation') validation: ElementRef;
   constructor() { 
     
   }
@@ -52,12 +53,26 @@ export class SelectedCellComponent implements OnInit {
   }
 
   setTitle(event){
+    this.validation.nativeElement.style.display = 'none';
     if(event.keyCode === 13)
       this.saveGrid();
   }
   
   saveGrid(){
-    this.title = this.inputTitle.nativeElement.value;
+    if(/^\d/.test(this.title)){
+      this.validation.nativeElement.innerText = "Name must not begin with number";
+      this.validation.nativeElement.style.display = 'block';
+      return;
+    }
+    if(/\s/g.test(this.title)){
+      this.validation.nativeElement.innerText = "Space will be replaced by dash";
+      this.validation.nativeElement.style.display = 'block';
+      setTimeout(() => this.validation.nativeElement.style.display = 'none', 3000);
+      this.title = this.title.replace(/\s/g, "-");
+    }
+
+    console.log(this.title);
+    
     this.inputTitle.nativeElement.disabled = true;
     this.status = cellStatus.assigned;
     this.btnSave.nativeElement.style.display = "none";

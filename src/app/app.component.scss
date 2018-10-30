@@ -1,8 +1,9 @@
 
-section.hero-body{
-    flex-direction: column;
-    div{
-        flex-grow: 1;
+section.grid-edit{
+    min-height: 70%;
+    div.form-wrapper{
+        min-height: 20em;
+        margin-top: 1em; 
     }
 }
 .form-header{

@@ -1,10 +1,10 @@
 <section class="selecting" [ngStyle]="css" #cell>
   <div class="form-container">
     <div class="btn-container">
-      <button class="button is-success" (click)="saveGrid()" #btnSave><i class="fa fa-save"></i></button>
+      <button class="button is-success" (click)="saveGrid()" #btnSave [disabled]="title.length == 0"><i class="fa fa-save"></i></button>
       <button class="button is-danger" (click)="removeCell(cell)"><i class="fa fa-times"></i></button>
     </div>
-    <input type="text" class="input is-large" (keyup)="setTitle($event)" #txtTitle>
-    
+      <input type="text" class="input is-large" (keyup)="setTitle($event)" [(ngModel)]="title"   #txtTitle>
+    <p #validation class="validation"></p>
   </div>
 </section>

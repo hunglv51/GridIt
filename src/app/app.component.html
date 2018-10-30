@@ -12,8 +12,9 @@
         <span class=""><i class="fa fa-trash"></i></span>
       </button>
     </div>
-    <section class="hero-body">
-      <div >
+
+    <section class="grid-edit">
+      <div class="form-wrapper">
         <div class="form-header columns">
           <span class="title is-4 has-text-centered column is-10">Edit Columns</span>
           <button class="button is-primary is-bold" (click)="addColumn()">
@@ -27,17 +28,9 @@
               <span><i class="fa fa-minus-square"></i></span>
             </button>
           </div>
-
-          
-         
-          
-
         </div>
-
-
-
       </div>
-      <div >
+      <div class="form-wrapper">
         <div class="form-header columns">
           <span class="title is-4 has-text-centered column is-10">Edit Rows</span>
           <button class="button is-primary is-bold" (click)="addRow()">
@@ -52,13 +45,10 @@
             </button>
           </div>
 
-         
-          
-          
-
         </div>
       </div>
     </section>
+
     <div class=" has-text-centered hero-foot">
       <h4 class="title is-4">Grid Gap</h4>
 
@@ -73,9 +63,9 @@
     </div>
 
   </aside>
-  
-<app-grid class="column is-10 " [rows]="rows.length" [cols]="cols.length"></app-grid>
 
-  
+  <app-grid class="column is-10 " [rows]="rows.length" [cols]="cols.length"></app-grid>
+
+
 
 </div>
