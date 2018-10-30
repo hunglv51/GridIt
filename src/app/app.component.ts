@@ -36,8 +36,16 @@ export class AppComponent {
     this.rows = ["", ""];
     this.cols = ["", "", ""];
     this.gridComponent.grids = [1,2,3,4,5,6];
+    this.gridComponent.removeAllCells();
     
   }
 
+  getCode(frmNewPen, inputData){
+    let data = this.gridComponent.getCodeData();
+    console.log(data);
+    inputData.value = JSON.stringify(data).replace(/"/g, "&quot;").replace(/'/g, "&apos;");
+    frmNewPen.submit();
+    
+  }
 
 }

@@ -2,7 +2,8 @@ import { Component, Input, AfterViewChecked, ViewChild, ComponentRef, ComponentF
 import { CellDirective } from './cell.directive';
 
 import { SelectedCellComponent } from '../selected-cell/selected-cell.component';
-import { CellService } from '../cell.service';
+import { cellStatus } from 'src/models/cell-status';
+
 
 
 
@@ -20,7 +21,7 @@ export class GridComponent implements AfterViewChecked {
   gridTemplate = [];
   startCell: number = 0;
   endCell: number = 0;
-  namedCells: Array<ComponentRef<SelectedCellComponent>>;
+  namedCells: Array<ComponentRef<SelectedCellComponent>> = [];
   selectingCell: ComponentRef<SelectedCellComponent> = undefined;
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {    
   }
@@ -33,11 +34,26 @@ export class GridComponent implements AfterViewChecked {
 
   selectCell(cellIndex : number) {
     console.log("Cell " + cellIndex + " is selected");
-    
+    if(this.selectingCell != undefined){
+      switch(this.selectingCell.instance.status){
+        case cellStatus.delete:
+          this.selectingCell.destroy();
+          this.selectingCell = undefined;
+          break;
+        case cellStatus.assigned:
+          this.namedCells.push(this.selectingCell);
+          this.selectingCell = undefined;
+          this.startCell = 0;
+          
+          break;
+        default:
+          break;
+      }
+    }
     
     if (this.startCell === 0) {
-      this.startCell = cellIndex;
-      this.paintSelectCell(this.startCell, this.startCell);
+      this.startCell = this.endCell = cellIndex;
+      this.paintSelectCell(this.startCell, this.endCell);
       
     }
     else{
@@ -49,10 +65,10 @@ export class GridComponent implements AfterViewChecked {
   }
 
   paintSelectCell(startCell: number, endCell: number) {
-    
+   
     if (this.selectingCell === undefined) {
       this.selectingCell = this.createSelectingSection();
-      console.log(this.selectingCell);
+      console.log('create new selecting cell');
       
     }
     this.selectingCell.instance.setGridArea(startCell, endCell, this.cols);
@@ -128,10 +144,87 @@ export class GridComponent implements AfterViewChecked {
     return selectingSection;
   }
 
-  onSaveTitle(title){
-    console.log();
+  removeAllCells(){
+    this.namedCells.forEach(x => x.destroy());
+    this.namedCells = [];
+    this.selectingCell.destroy();
+    this.selectingCell = undefined;
+  }
+
+  getCodeData(){
+    if(this.selectingCell.instance.status === cellStatus.assigned)
+      {
+        this.namedCells.push(this.selectingCell);
+        this.selectingCell = undefined;
+      }
+    for(let i = 0;i < this.rows;i++){
+      this.gridTemplate.push([]);
+    }
+    
+    this.namedCells.forEach(x => {
+      console.log(x.instance.title);
+      let start = {row:"", col:""};
+      let end = {row:"", col:""};
+      [start.row, start.col, end.row, end.col] = x.instance.gridArea.split("/");
+      this.setGridArea(start, end, x.instance.title);
+    });
+    console.table(this.gridTemplate);
+    console.log(this.getGridHTML());
+    console.log(this.getGridCSS());
+    return {
+      title: "New Pen",
+      html: this.getGridHTML(),
+      css: this.getGridCSS(),
+      js:""
+    };
+    
+  }
+  setGridArea(start, end, title){
+    for(let i = start.row - 1;i < end.row - 1;i++){
+      for(let j = start.col - 1;j < end.col - 1;j++){
+        this.gridTemplate[i][j] = title;
+      }
+    }
   }
  
-  
- 
+  getGridHTML(){
+    let rootHtml = document.createElement('div');
+    let container = document.createElement('div');
+    container.setAttribute('class','grid-container');
+    this.namedCells.forEach(x => {
+      let cell = document.createElement('div');
+      cell.setAttribute('class', x.instance.title);
+      cell.innerText = x.instance.title;
+      container.appendChild(cell);
+    });
+    rootHtml.appendChild(container);
+    return rootHtml.innerHTML;
+    
+  }
+  getGridCSS(){
+   
+    return `
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+    }
+    .grid-container div{
+      border: 1px solid black;
+    }
+    
+    .grid-container{
+      height:100%;
+      display:grid;
+       grid-template-areas:${this.gridTemplate.map(x => '"' + x.join(" ") + '"').join(" ")};
+    }
+    ` + this.namedCells.map(x => {
+      return `.${x.instance.title}{grid-area: ${x.instance.title};}`
+    }).join('\n');
+    
+    
+    
+    ;
+  }
+
 }

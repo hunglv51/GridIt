@@ -1,6 +1,5 @@
 section.selecting{
-    border:3px ridge dodgerblue;
-    grid-area: 1/1/3/2;
+    border:3px ridge ;
     position: absolute;
     top:0;
     bottom: 0;
@@ -10,9 +9,17 @@ section.selecting{
     .form-container{
         input{
             border-color: crimson;
+            position: absolute;
+            top: calc(50% - 1em);
+            bottom: 0;
+            left:0;
+            right:0;
         }
+        .btn-container{
+            text-align: right;
+        }
+        min-height: 100%;
         position: relative;
-        top: calc(50% - 2em);
     }
 }
 

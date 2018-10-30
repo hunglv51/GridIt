@@ -2,7 +2,10 @@
 <div class="columns">
   <aside class="column is-2 aside is-fullheight hero">
     <div class=" has-text-centered hero-head">
-      <button class="button is-success  is-bold is-large">
+      <form action="https://codepen.io/pen/define" target="_blank" method="POST" #frmNewPen>
+        <input type="hidden" #inputData name="data">
+      </form>
+      <button class="button is-success  is-bold is-large" (click)="getCode(frmNewPen, inputData)">
         <span class="">Get Code!!!</span>
       </button>
       <button class="button is-danger  is-bold is-large" (click)="reset()">

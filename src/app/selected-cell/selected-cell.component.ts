@@ -1,6 +1,6 @@
-import { Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
-import { CellService } from '../cell.service';
-import { GridComponent } from '../grid/grid.component';
+import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+
+import { cellStatus } from 'src/models/cell-status';
 
 
 @Component({
@@ -11,14 +11,17 @@ import { GridComponent } from '../grid/grid.component';
 export class SelectedCellComponent implements OnInit {
   gridArea: string;
   title: string;
-  @Input() gridTemplates: any[] = [];
-  @Output() onSaveGrid: EventEmitter<any> = new EventEmitter();
-  
-  constructor(private cellService: CellService) { 
+  status:number;
+  css:object = {'border-color': this.getRandomColor(), 'grid-area': ""};
+  @ViewChild("btnSave") btnSave: ElementRef;
+  @ViewChild('txtTitle') inputTitle: ElementRef;
+  constructor() { 
     
   }
 
   ngOnInit() {
+    this.status = cellStatus.selecting;
+    
   }
 
   getColumnRowIndex(cellIndex:number, cols:number){
@@ -35,6 +38,8 @@ export class SelectedCellComponent implements OnInit {
     let start = this.getColumnRowIndex(startCell, cols);
     let end = this.getColumnRowIndex(endCell, cols);
     this.gridArea = `${start.row}/${start.col}/${end.row + 1}/${end.col + 1}`;
+    this.css['grid-area'] = this.gridArea;
+    this.inputTitle.nativeElement.focus();
   }
 
   getRandomColor() {
@@ -46,13 +51,21 @@ export class SelectedCellComponent implements OnInit {
     return color;
   }
 
-  setTitle(event, title){
+  setTitle(event){
     if(event.keyCode === 13)
-      this.saveGrid(title);
+      this.saveGrid();
   }
   
-  saveGrid(title){
-    console.log(title);
-    this.title = title;
+  saveGrid(){
+    this.title = this.inputTitle.nativeElement.value;
+    this.inputTitle.nativeElement.disabled = true;
+    this.status = cellStatus.assigned;
+    this.btnSave.nativeElement.style.display = "none";
+    
+  }
+
+  removeCell(cell){
+    cell.style.display = "none";
+    this.status = cellStatus.delete;
   }
 }
