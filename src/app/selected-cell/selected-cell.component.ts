@@ -38,6 +38,16 @@ export class SelectedCellComponent implements OnInit {
   setGridArea(startCell, endCell, cols){
     let start = this.getColumnRowIndex(startCell, cols);
     let end = this.getColumnRowIndex(endCell, cols);
+    if(start.row > end.row){
+      let t = start.row;
+      start.row = end.row;
+      end.row = t;
+    }
+    if(start.col > end.col){
+      let t = start.col;
+      start.col = end.col;
+      end.col = t;
+    }
     this.gridArea = `${start.row}/${start.col}/${end.row + 1}/${end.col + 1}`;
     this.css['grid-area'] = this.gridArea;
     this.inputTitle.nativeElement.focus();

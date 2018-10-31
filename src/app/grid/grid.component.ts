@@ -1,10 +1,7 @@
-import { Component, Input, AfterViewChecked, ViewChild, ComponentRef, ComponentFactoryResolver } from '@angular/core';
+import { Component, Input, AfterViewChecked, ViewChild, ComponentRef, ComponentFactoryResolver, AfterViewInit, OnInit } from '@angular/core';
 import { CellDirective } from './cell.directive';
-
 import { SelectedCellComponent } from '../selected-cell/selected-cell.component';
 import { cellStatus } from 'src/models/cell-status';
-
-
 
 
 @Component({
@@ -12,7 +9,7 @@ import { cellStatus } from 'src/models/cell-status';
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.scss']
 })
-export class GridComponent implements AfterViewChecked {
+export class GridComponent implements AfterViewChecked, OnInit {
   @Input("rows") rows: number;
   @Input("cols") cols: number;
   @ViewChild("gridContainer") gridContainer;
@@ -23,10 +20,20 @@ export class GridComponent implements AfterViewChecked {
   endCell: number = 0;
   namedCells: Array<ComponentRef<SelectedCellComponent>> = [];
   selectingCell: ComponentRef<SelectedCellComponent> = undefined;
+  @Input("gap") gap: object;
+  css: object;
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {    
   }
   
+  ngOnInit(){
+    this.css = {
+      'grid-template-columns':this.getColumnTemplate(this.cols),
+      'grid-gap': `${this.gap["row"]}px ${this.gap["col"]}px`
+    }
+  }
+
   ngAfterViewChecked() {
+    
     if (this.grids.length === 0) {
       this.initGrids();
     }
@@ -39,6 +46,7 @@ export class GridComponent implements AfterViewChecked {
         case cellStatus.delete:
           this.selectingCell.destroy();
           this.selectingCell = undefined;
+          this.startCell = 0;
           break;
         case cellStatus.assigned:
           this.namedCells.push(this.selectingCell);
@@ -74,9 +82,6 @@ export class GridComponent implements AfterViewChecked {
     this.selectingCell.instance.setGridArea(startCell, endCell, this.cols);
     
   }
-  
-
-
  
  
   //#region  grid ulti
@@ -221,15 +226,26 @@ export class GridComponent implements AfterViewChecked {
     .grid-container{
       height:100%;
       display:grid;
-       grid-template-areas:${this.gridTemplate.map(x => '"' + x.join(" ") + '"').join(" ")};
+      grid-template-areas:${this.gridTemplate.map(x => '"' + x.join(" ") + '"').join(" ")};
+      grid-gap: ${this.css["grid-gap"]};
     }
     ` + this.namedCells.map(x => {
-      return `.${x.instance.title}{grid-area: ${x.instance.title};}`
+      let gridArea = x.instance.title;
+      if(this.isOverrided(gridArea)){
+        gridArea = x.instance.gridArea;
+      }
+      return `.${x.instance.title}{grid-area: ${gridArea};}`
     }).join('\n');
     
     
     
     ;
   }
+
+  isOverrided(title){
+    return !this.gridTemplate.reduce((x,y) => x.concat(y)).includes(title);
+  }
+
+ 
 
 }

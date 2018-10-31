@@ -1,4 +1,4 @@
-<div id="grid-build" [ngStyle]="{'grid-template-columns':getColumnTemplate(cols)}" #gridContainer>
+<div id="grid-build" [ngStyle]="css" #gridContainer>
   <section class="cell-holder" *ngFor="let cell of grids;let cellIndex of index" (click)="selectCell(cellIndex)" [id]="cellIndex">
   </section>
   <ng-template selecting-cell>

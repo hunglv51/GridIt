@@ -8,17 +8,18 @@ import { GridComponent } from './grid/grid.component';
 })
 export class AppComponent {
   title = 'grid-it';
-  rows = ["", ""];
-  cols = ["", "", ""];
+  rows = [1, 2];
+  cols = [1, 2, 3];
+  gap = {row:0, col:0};
   @ViewChild(GridComponent) gridComponent: GridComponent;
   addRow() {
-    this.rows.push("");
+    this.rows.push(this.rows.length + 1);
     this.gridComponent.addNewRow();
 
 
   }
   addColumn() {
-    this.cols.push("");
+    this.cols.push(this.cols.length + 1);
     this.gridComponent.addNewColumn();
 
   }
@@ -33,8 +34,8 @@ export class AppComponent {
 
   }
   reset(){
-    this.rows = ["", ""];
-    this.cols = ["", "", ""];
+    this.rows = [1, 2];
+    this.cols = [1,2,3];
     this.gridComponent.grids = [1,2,3,4,5,6];
     this.gridComponent.removeAllCells();
     
@@ -47,5 +48,15 @@ export class AppComponent {
     frmNewPen.submit();
     
   }
+  changeRowSize(row){
+    console.log(row);
+    
+  }
+  changeColSize(col, newSize){
+    console.log(col);
+    console.log(newSize);
+    
+  }
+  
 
 }
