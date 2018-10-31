@@ -38,7 +38,15 @@ export class AppComponent {
     this.cols = [1,2,3];
     this.gridComponent.grids = [1,2,3,4,5,6];
     this.gridComponent.removeAllCells();
+    let inputs = document.getElementsByClassName('input');
+    console.log(inputs);
     
+    for(let i = 0;i < inputs.length;i++){
+      inputs[i]["value"] = "";
+    }
+    // this.changeGap();
+    this.gap = {row:0, col:0};
+    this.changeGap();
   }
 
   getCode(frmNewPen, inputData){
@@ -50,16 +58,37 @@ export class AppComponent {
   }
   changeRowSize(row, newSize){
     console.log(row);
+    if(newSize === ""){
+      newSize = "auto";
+    }
+    else{
+      newSize += "px";
+    }
     this.gridComponent.changeRowSize(row,newSize);
   }
   changeColSize(col, newSize){
     console.log(col);
     console.log(newSize);
+    console.log(isNaN(newSize));
+    
+    if(newSize === ""){
+      newSize = "auto";
+    }
+    else{
+      newSize += "px";
+    }
     this.gridComponent.changeColSize(col,newSize);
   }
   
   changeGap(){
+    console.log(this.gap);
+    
+    this.gap.row = (this.gap.row === null) ? 0 : this.gap.row; 
+    this.gap.col = (this.gap.col === null) ? 0 : this.gap.col;
+    console.log(this.gap);
+    
     this.gridComponent.gap = this.gap;
+
     this.gridComponent.updateUI();
   }
 

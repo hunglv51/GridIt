@@ -23,7 +23,7 @@
         </div>
         <div class="form-container">
           <div class="field is-horizontal has-text-centered" *ngFor="let col of cols">
-            <input type="number" class="input is-primary" placeholder="auto" (change)="changeColSize(col, $event.srcElement.value)">
+            <input type="number" class="input is-primary" placeholder="auto" (change)="changeColSize(col, $event.srcElement.value)" min="0">
             <button class="button is-danger delete-btn" (click)="removeColumn()">
               <span><i class="fa fa-minus-square"></i></span>
             </button>
@@ -39,7 +39,7 @@
         </div>
         <div class="form-container">
           <div class="field is-horizontal has-text-centered" *ngFor="let row of rows">
-            <input type="number" class="input is-primary" placeholder="auto" (change)="changeRowSize(row, $event.srcElement.value)">
+            <input type="number" class="input is-primary" placeholder="auto" (change)="changeRowSize(row, $event.srcElement.value)" min="0">
             <button class="button is-danger delete-btn" (click)="removeRow()">
               <span><i class="fa fa-minus-square"></i></span>
             </button>

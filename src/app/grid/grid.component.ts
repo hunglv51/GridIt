@@ -176,7 +176,7 @@ export class GridComponent implements AfterViewChecked, OnInit {
 
 
   getCodeData(){
-    if(this.selectCell != undefined && this.selectingCell.instance.status === cellStatus.assigned)
+    if(this.selectingCell != undefined && this.selectingCell.instance.status === cellStatus.assigned)
       {
         this.namedCells.push(this.selectingCell);
         this.selectingCell = undefined;
@@ -265,28 +265,14 @@ export class GridComponent implements AfterViewChecked, OnInit {
   }
   changeRowSize(row, newSize){
     let arrTemplateRows = this.css["grid-template-rows"].trim().split(" ");
-    if(isNaN(newSize))
-    {
-      arrTemplateRows[row * 1 - 1] = "auto";
-    }
-    else
-    {
-      arrTemplateRows[row * 1 - 1] = newSize + "px";
-    }
+    
+    arrTemplateRows[row * 1 - 1] = newSize;
     this.css["grid-template-rows"] = arrTemplateRows.join(" "); 
     
   }
   changeColSize(col, newSize){
     let arrTemplateCols = this.css["grid-template-columns"].trim().split(" ");
-    if(isNaN(newSize))
-    {
-      arrTemplateCols[col * 1 - 1] = "auto";
-    }
-    else
-    {
-      arrTemplateCols[col * 1 - 1] = newSize + "px";
-    }
-    arrTemplateCols[col * 1 - 1] = newSize + "px";
+    arrTemplateCols[col * 1 - 1] = newSize;
     this.css["grid-template-columns"] = arrTemplateCols.join(" ");
   }
 
