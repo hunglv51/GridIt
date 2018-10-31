@@ -48,15 +48,19 @@ export class AppComponent {
     frmNewPen.submit();
     
   }
-  changeRowSize(row){
+  changeRowSize(row, newSize){
     console.log(row);
-    
+    this.gridComponent.changeRowSize(row,newSize);
   }
   changeColSize(col, newSize){
     console.log(col);
     console.log(newSize);
-    
+    this.gridComponent.changeColSize(col,newSize);
   }
   
+  changeGap(){
+    this.gridComponent.gap = this.gap;
+    this.gridComponent.updateUI();
+  }
 
 }

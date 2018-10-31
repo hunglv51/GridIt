@@ -16,6 +16,7 @@ export class SelectedCellComponent implements OnInit {
   @ViewChild("btnSave") btnSave: ElementRef;
   @ViewChild('txtTitle') inputTitle: ElementRef;
   @ViewChild('validation') validation: ElementRef;
+  @ViewChild('cell') cellContainer: ElementRef;
   constructor() { 
     
   }
@@ -74,6 +75,12 @@ export class SelectedCellComponent implements OnInit {
       this.validation.nativeElement.style.display = 'block';
       return;
     }
+    if(document.getElementsByClassName(this.title).length > 0){
+      this.validation.nativeElement.innerText = "Name must not be duplicated";
+      this.validation.nativeElement.style.display = 'block';
+      return;
+    }
+
     if(/\s/g.test(this.title)){
       this.validation.nativeElement.innerText = "Space will be replaced by dash";
       this.validation.nativeElement.style.display = 'block';
@@ -82,15 +89,15 @@ export class SelectedCellComponent implements OnInit {
     }
 
     console.log(this.title);
-    
+    this.cellContainer.nativeElement.setAttribute("class", "selecting " + this.title);
     this.inputTitle.nativeElement.disabled = true;
     this.status = cellStatus.assigned;
     this.btnSave.nativeElement.style.display = "none";
     
   }
 
-  removeCell(cell){
-    cell.style.display = "none";
+  removeCell(){
+    this.cellContainer.nativeElement.style.display = "none";
     this.status = cellStatus.delete;
   }
 }

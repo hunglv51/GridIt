@@ -16,7 +16,7 @@
     <section class="grid-edit">
       <div class="form-wrapper">
         <div class="form-header columns">
-          <span class="title is-4 has-text-centered column is-10">Edit Columns</span>
+          <span class="title is-4 has-text-centered column is-10">Edit Columns(px)</span>
           <button class="button is-primary is-bold" (click)="addColumn()">
             <i class="fa fa-plus-square"></i>
           </button>
@@ -32,14 +32,14 @@
       </div>
       <div class="form-wrapper">
         <div class="form-header columns">
-          <span class="title is-4 has-text-centered column is-10">Edit Rows</span>
+          <span class="title is-4 has-text-centered column is-10">Edit Rows(px)</span>
           <button class="button is-primary is-bold" (click)="addRow()">
             <i class="fa fa-plus-square"></i>
           </button>
         </div>
         <div class="form-container">
           <div class="field is-horizontal has-text-centered" *ngFor="let row of rows">
-            <input type="number" class="input is-primary" placeholder="auto" (change)="changeRowSize(row)">
+            <input type="number" class="input is-primary" placeholder="auto" (change)="changeRowSize(row, $event.srcElement.value)">
             <button class="button is-danger delete-btn" (click)="removeRow()">
               <span><i class="fa fa-minus-square"></i></span>
             </button>
@@ -50,15 +50,15 @@
     </section>
 
     <div class=" has-text-centered hero-foot">
-      <h4 class="title is-4">Grid Gap</h4>
+      <h4 class="title is-4">Grid Gap(px)</h4>
 
       <div class="field is-horizontal has-text-left columns">
         <label for="colGap" class="label column  has-text-centered">Column</label>
-        <input type="number" id="colGap" class="input is-primary column" [(ngModel)]="gap.col"  value="0" min="0" #colGap >
+        <input type="number" id="colGap" class="input is-primary column" [(ngModel)]="gap.col" (change)="changeGap()"  value="0" min="0">
       </div>
       <div class="has-text-left field is-horizontal columns">
         <label for="rowGap" class="label is-6 column has-text-centered">Row</label>
-        <input type="number" id="rowGap" class="input is-primary column" [(ngModel)]="gap.row" value="0" min="0" #rowGap>
+        <input type="number" id="rowGap" class="input is-primary column" [(ngModel)]="gap.row" (change)="changeGap()" value="0" min="0">
       </div>
     </div>
 

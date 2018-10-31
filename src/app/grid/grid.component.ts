@@ -26,10 +26,7 @@ export class GridComponent implements AfterViewChecked, OnInit {
   }
   
   ngOnInit(){
-    this.css = {
-      'grid-template-columns':this.getColumnTemplate(this.cols),
-      'grid-gap': `${this.gap["row"]}px ${this.gap["col"]}px`
-    }
+    this.updateUI();
   }
 
   ngAfterViewChecked() {
@@ -88,6 +85,7 @@ export class GridComponent implements AfterViewChecked, OnInit {
   addNewRow() {
     console.log("Rows " + this.rows)
     console.log("Cols " + this.cols)
+    this.css['grid-template-rows'] = this.getSizeTemplate(this.rows + 1);
     let gridSize = this.grids.length;
     for (let i = gridSize + 1; i <= gridSize + this.cols; i++) {
       this.grids.push(i);
@@ -97,6 +95,7 @@ export class GridComponent implements AfterViewChecked, OnInit {
   addNewColumn() {
     console.log("Rows " + this.rows)
     console.log("Cols " + this.cols)
+    this.css['grid-template-columns'] = this.getSizeTemplate(this.cols + 1);
     let gridSize = this.grids.length;
     for (let i = gridSize + 1; i <= gridSize + this.rows; i++) {
       this.grids.push(i);
@@ -104,8 +103,9 @@ export class GridComponent implements AfterViewChecked, OnInit {
   }
 
   removeRow() {
-    console.log("Rows " + this.rows)
-    console.log("Cols " + this.cols)
+    console.log("Rows " + this.rows);
+    console.log("Cols " + this.cols);
+    this.css['grid-template-rows'] = this.getSizeTemplate(this.rows - 1);
     for (let i = 0; i < this.cols; i++) {
       this.grids.pop();
     }
@@ -114,6 +114,7 @@ export class GridComponent implements AfterViewChecked, OnInit {
   removeColumn() {
     console.log("Rows " + this.rows)
     console.log("Cols " + this.cols)
+    this.css['grid-template-columns'] = this.getSizeTemplate(this.cols - 1);
     for (let i = 0; i < this.rows; i++) {
       this.grids.pop();
     }
@@ -129,12 +130,12 @@ export class GridComponent implements AfterViewChecked, OnInit {
   }
   //#endregion
 
-  getColumnTemplate(numCols) {
-    let colTemplate = "";
-    for (let i = 0; i < numCols; i++) {
-      colTemplate += "auto ";
+  getSizeTemplate(num) {
+    let sizeTemplate = "";
+    for (let i = 0; i < num; i++) {
+      sizeTemplate += "auto ";
     }
-    return colTemplate;
+    return sizeTemplate;
   }
 
   createSelectingSection() {
@@ -152,13 +153,30 @@ export class GridComponent implements AfterViewChecked, OnInit {
   removeAllCells(){
     this.namedCells.forEach(x => x.destroy());
     this.namedCells = [];
-    this.selectingCell.destroy();
-    this.selectingCell = undefined;
+    this.cols = 3;
+    this.rows = 2;
+    if(this.selectingCell != undefined){
+      this.selectingCell.destroy();
+      this.selectingCell = undefined;
+    }
+    console.log(`On removing with row ${this.rows} and col ${this.cols}`);
+    this.updateUI();
+
     this.gridTemplate = [];
   }
 
+  updateUI(){
+    this.css = {
+      'grid-template-columns':this.getSizeTemplate(this.cols),
+      'grid-template-rows': this.getSizeTemplate(this.rows),
+      'grid-gap': `${this.gap["row"]}px ${this.gap["col"]}px`
+      
+    }
+  }
+
+
   getCodeData(){
-    if(this.selectingCell.instance.status === cellStatus.assigned)
+    if(this.selectCell != undefined && this.selectingCell.instance.status === cellStatus.assigned)
       {
         this.namedCells.push(this.selectingCell);
         this.selectingCell = undefined;
@@ -226,6 +244,8 @@ export class GridComponent implements AfterViewChecked, OnInit {
     .grid-container{
       height:100%;
       display:grid;
+      grid-template-columns: ${this.css["grid-template-columns"]};
+      grid-template-rows: ${this.css["grid-template-rows"]};
       grid-template-areas:${this.gridTemplate.map(x => '"' + x.join(" ") + '"').join(" ")};
       grid-gap: ${this.css["grid-gap"]};
     }
@@ -237,15 +257,22 @@ export class GridComponent implements AfterViewChecked, OnInit {
       return `.${x.instance.title}{grid-area: ${gridArea};}`
     }).join('\n');
     
-    
-    
     ;
   }
 
   isOverrided(title){
     return !this.gridTemplate.reduce((x,y) => x.concat(y)).includes(title);
   }
-
- 
+  changeRowSize(row, newSize){
+    let arrTemplateRows = this.css["grid-template-rows"].trim().split(" ");
+    arrTemplateRows[row * 1 - 1] = newSize + "px";
+    this.css["grid-template-rows"] = arrTemplateRows.join(" "); 
+    
+  }
+  changeColSize(col, newSize){
+    let arrTemplateCols = this.css["grid-template-columns"].trim().split(" ");
+    arrTemplateCols[col * 1 - 1] = newSize + "px";
+    this.css["grid-template-columns"] = arrTemplateCols.join(" ");
+  }
 
 }
