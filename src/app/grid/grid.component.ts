@@ -265,12 +265,27 @@ export class GridComponent implements AfterViewChecked, OnInit {
   }
   changeRowSize(row, newSize){
     let arrTemplateRows = this.css["grid-template-rows"].trim().split(" ");
-    arrTemplateRows[row * 1 - 1] = newSize + "px";
+    if(isNaN(newSize))
+    {
+      arrTemplateRows[row * 1 - 1] = "auto";
+    }
+    else
+    {
+      arrTemplateRows[row * 1 - 1] = newSize + "px";
+    }
     this.css["grid-template-rows"] = arrTemplateRows.join(" "); 
     
   }
   changeColSize(col, newSize){
     let arrTemplateCols = this.css["grid-template-columns"].trim().split(" ");
+    if(isNaN(newSize))
+    {
+      arrTemplateCols[col * 1 - 1] = "auto";
+    }
+    else
+    {
+      arrTemplateCols[col * 1 - 1] = newSize + "px";
+    }
     arrTemplateCols[col * 1 - 1] = newSize + "px";
     this.css["grid-template-columns"] = arrTemplateCols.join(" ");
   }
